@@ -104,3 +104,8 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Vuforia: package is too big for GitHub (>100 MB); re-import it from developer.vuforia.com
+/Packages/com.ptc.vuforia.engine-*.tgz
+# Vuforia runtime cache
+/[Qq][Cc][Aa][Rr]/
