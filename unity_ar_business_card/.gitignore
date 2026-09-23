@@ -109,3 +109,7 @@ InitTestScene*.unity*
 /Packages/com.ptc.vuforia.engine-*.tgz
 # Vuforia runtime cache
 /[Qq][Cc][Aa][Rr]/
+
+# Unity build debug output (never ship or commit)
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+*_BurstDebugInformation_DoNotShip/
