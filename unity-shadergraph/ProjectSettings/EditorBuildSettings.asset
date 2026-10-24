@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hologram.unity
     guid: eef84185df9b7a74c801e3fba1450e91
+  - enabled: 1
+    path: Assets/Scenes/Water.unity
+    guid: 1ee2174ad3c7e0647b731427a072b015
   m_configObjects: {}
