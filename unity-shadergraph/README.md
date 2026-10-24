@@ -137,6 +137,35 @@ Properties you can change in the Inspector:
 
 The two textures in `Assets/Textures` were made for this project: `hologram_scanlines.png` (horizontal scanlines) and `hologram_grid.png` (a grid with faint scanlines). `hologram_grid.mat` is an extra blue preset that uses the grid texture. The `Hologram` scene shows both. The animation plays in Play mode, or in the Scene view with **Always Refresh** turned on.
 
+### 5. Sine of the sea
+
+![Animated water](5-water.gif)
+
+`Assets/Shaders/water.shadergraph` turns a flat surface into moving water. The material is `Assets/Materials/water.mat`.
+
+How it works:
+
+- **Vertex animation.** The object space **Position** is split into x, y and z. Two sine waves run across the surface, one along x and one along z (slightly slower and longer, so they cross instead of lining up):
+  `h = (sin(x * frequency + time * speed) + sin(z * frequency * 0.8 + time * speed * 1.3)) * 0.5 * wave size`.
+  The new position is `(x, y + h, z)`, sent to the **Position** block of the vertex stage.
+- **Normals.** Moving the vertices does not change the normals by itself, so the light would stay flat. The slope of each wave is its **Cosine** times the wave size and frequency, and the normal is `normalize(-slope x, 1, -slope z)`, sent to the **Normal** block. Now the light and highlights follow the waves.
+- **Color.** The same two sines give a height between 0 (trough) and 1 (crest). A **Lerp** goes from the deep color in the troughs to the shallow color on the crests. White foam appears where the height plus a drifting **Simple Noise** goes over the foam threshold (**Smoothstep**), so it only shows on the tops of the waves. The color is worked out per pixel, so even a cube with very few vertices shows moving waves.
+
+Properties you can change in the Inspector:
+
+| Property | What it does |
+| --- | --- |
+| Deep Color | Color of the water in the troughs |
+| Shallow Color | Color of the water on the crests |
+| Foam Color | Color of the foam |
+| Wave Size | Height of the waves |
+| Wave Frequency | How close together the waves are |
+| Wave Speed | How fast the waves move |
+| Foam Threshold | How high a crest has to be before it gets foam (higher means less foam) |
+| Smoothness | Surface smoothness, for the reflection of the light |
+
+Unity's built-in Plane only has 11 x 11 vertices, which is enough to see the waves but looks a bit blocky. The `Water` scene uses `Assets/Meshes/WaterGrid.asset` instead, a 40 x 40 unit grid with 160 x 160 squares, made for this project. `water_stormy.mat` is an extra preset with darker water and bigger, slower waves. The animation plays in Play mode, or in the Scene view with **Always Refresh** turned on.
+
 ## Asset package
 
-`unity-shadergraph.unitypackage` contains the shader graphs, the materials, the textures and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, or `ice.mat` or `hologram.mat` onto a cube.
+`unity-shadergraph.unitypackage` contains the shader graphs, the materials, the textures, the water mesh and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, `ice.mat` or `hologram.mat` onto a cube, or `water.mat` onto a plane or cube.
