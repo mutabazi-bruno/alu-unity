@@ -79,6 +79,35 @@ Properties you can change in the Inspector:
 
 `disintegrate_fine.mat` (small fast fragments) and `disintegrate_chunky.mat` (big fragments) are extra presets. The `Disintegrate` scene shows all three. Like the pulse, the animation plays in Play mode, or in the Scene view with **Always Refresh** turned on.
 
+### 3. Iceman
+
+![Ice cubes](3-ice.png)
+
+`Assets/Shaders/ice.shadergraph` makes an object look like a block of ice. The material is `Assets/Materials/ice.mat`.
+
+How it works:
+
+- The graph uses a **Transparent** surface with alpha blending and renders **both faces**, so you can see the back edges of a cube through its front.
+- The frost is procedural, so no texture is needed. A **Simple Noise** node is multiplied by a **Voronoi** node, which gives a cracked, crystal-like pattern. That pattern blends the base color toward the frost color and also makes the frosty spots less transparent.
+- The edges come from a fresnel term built by hand: **Normal Vector** dot **View Direction**, then **Absolute**, **One Minus** and **Power**. Faces seen at a steep angle get brighter and more solid, like real ice. The Absolute step keeps it working on back faces too, because URP does not flip their normals and the built-in Fresnel Effect node would turn them solid white.
+- Alpha is the opacity plus the frost plus the edge term, clamped to 0–1 with a **Saturate** node.
+
+Properties you can change in the Inspector:
+
+| Property | What it does |
+| --- | --- |
+| Base Color | Main color of the ice |
+| Opacity | How see-through the clear parts are |
+| Frost Color | Color of the frosty pattern |
+| Frost Scale | Size of the frost pattern: higher values give finer detail |
+| Frost Amount | How strong the frost is |
+| Edge Color | HDR color added on faces seen at a steep angle |
+| Edge Power | How quickly the edge effect falls off |
+| Edge Opacity | How much the edges add to the opacity |
+| Smoothness | Surface smoothness, for the specular highlight |
+
+`ice_clear.mat` (clearer, less frost) and `ice_frosted.mat` (heavier frost) are extra presets. The `Ice` scene shows all three on cubes.
+
 ## Asset package
 
-`unity-shadergraph.unitypackage` contains the shader graphs, the materials and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object.
+`unity-shadergraph.unitypackage` contains the shader graphs, the materials and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, or `ice.mat` onto a cube.
