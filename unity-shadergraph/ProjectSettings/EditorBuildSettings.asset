@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Ice.unity
     guid: 6f527f35c819b7d45aab5758be72ed3a
+  - enabled: 1
+    path: Assets/Scenes/Hologram.unity
+    guid: eef84185df9b7a74c801e3fba1450e91
   m_configObjects: {}
