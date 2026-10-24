@@ -52,6 +52,33 @@ Properties you can change in the Inspector:
 
 `glow_animated_cyan.mat` and `glow_animated_pink.mat` are extra presets with different speeds. The `GlowPulse` scene shows all three. The pulse plays in Play mode, or in the Scene view when **Always Refresh** is turned on in the effects menu.
 
+### 2. Mr. Stark, I don't feel so good
+
+![Disintegrating spheres](2-disintegrate.gif)
+
+`Assets/Shaders/disintegrate.shadergraph` makes an object break apart into fragments and then put itself back together, on a loop. The material is `Assets/Materials/disintegrate.mat`.
+
+How it works:
+
+- A **Voronoi** node splits the surface into cells. Its **Cells** output gives every cell one random value between 0 and 1, so each cell acts like one fragment. Fragment Scale sets the cell density.
+- **Time** times the speed and 2π goes through a **Sine** and a **Remap**, which gives a threshold that moves up and down between 0 and 1.
+- The cell value goes into **Alpha** and the threshold into **Alpha Clip Threshold**, so every fragment whose value is below the threshold is cut away. As the threshold rises, more fragments disappear, one by one.
+- A **Step** node finds the fragments that are about to disappear (their value is just above the threshold) and lights them with the edge color, so the pieces look like they burn away. Those fragments drop their base color so the glow stays bright.
+- The graph renders both faces, so through the holes you see the inside of the shell instead of nothing.
+
+Properties you can change in the Inspector:
+
+| Property | What it does |
+| --- | --- |
+| Base Color | Main surface color |
+| Disintegration Speed | How many times per second the object falls apart and comes back |
+| Fragment Scale | Number of fragments: higher values give smaller pieces |
+| Edge Color | HDR color of the fragments that are about to disappear |
+| Edge Width | How many fragments glow before they disappear |
+| Smoothness | Surface smoothness, for the specular highlight |
+
+`disintegrate_fine.mat` (small fast fragments) and `disintegrate_chunky.mat` (big fragments) are extra presets. The `Disintegrate` scene shows all three. Like the pulse, the animation plays in Play mode, or in the Scene view with **Always Refresh** turned on.
+
 ## Asset package
 
-`unity-shadergraph.unitypackage` contains the shader graphs, the materials and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat` or `glow_animated.mat` onto any 3D object.
+`unity-shadergraph.unitypackage` contains the shader graphs, the materials and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object.
