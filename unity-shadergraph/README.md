@@ -108,6 +108,35 @@ Properties you can change in the Inspector:
 
 `ice_clear.mat` (clearer, less frost) and `ice_frosted.mat` (heavier frost) are extra presets. The `Ice` scene shows all three on cubes.
 
+### 4. Hey Cortana, what's UV positioning?
+
+![Flickering hologram](4-hologram.gif)
+
+`Assets/Shaders/hologram.shadergraph` gives an object a flickering hologram look built from a texture. The material is `Assets/Materials/hologram.mat` and it uses `Assets/Textures/hologram_scanlines.png`.
+
+How it works:
+
+- The graph is **Unlit** and **Transparent** and renders both faces, so the hologram is see-through and lights itself.
+- The mesh **UV** goes through a **Tiling And Offset** node. Tiling (Line Density) repeats the texture more times across each face, and Offset is **Time** times the scroll speed, so the lines slowly crawl over the object. The result is the UV for a **Sample Texture 2D** node that reads the hologram texture.
+- The flicker is a **Simple Noise** node fed with Time times the flicker speed. A **Lerp** between 1 and that noise, controlled by Flicker Strength, multiplies both the color and the alpha, so the whole hologram randomly dims and brightens.
+- A fresnel term (Normal Vector dot View Direction, Absolute, One Minus, Power) makes the edges brighter and more solid, the same two-sided version as the ice shader.
+- Color is the base color times the texture plus the edges. Alpha is the texture times the opacity plus the edges, then multiplied by the flicker.
+
+Properties you can change in the Inspector:
+
+| Property | What it does |
+| --- | --- |
+| Base Color | HDR color of the hologram |
+| Hologram Texture | Texture that gives the hologram its pattern (white parts glow, black parts are see-through) |
+| Line Density | How many times the texture repeats on each face |
+| Scroll Speed | How fast the texture moves (negative values scroll the other way) |
+| Opacity | How solid the bright parts of the texture are |
+| Flicker Speed | How fast the flicker changes |
+| Flicker Strength | How much the flicker dims the hologram (0 turns it off) |
+| Rim Power | How quickly the edge glow falls off |
+
+The two textures in `Assets/Textures` were made for this project: `hologram_scanlines.png` (horizontal scanlines) and `hologram_grid.png` (a grid with faint scanlines). `hologram_grid.mat` is an extra blue preset that uses the grid texture. The `Hologram` scene shows both. The animation plays in Play mode, or in the Scene view with **Always Refresh** turned on.
+
 ## Asset package
 
-`unity-shadergraph.unitypackage` contains the shader graphs, the materials and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, or `ice.mat` onto a cube.
+`unity-shadergraph.unitypackage` contains the shader graphs, the materials, the textures and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, or `ice.mat` or `hologram.mat` onto a cube.
