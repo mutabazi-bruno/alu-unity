@@ -105,5 +105,6 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 
-# Submitted shader package for review
+# Submitted shader packages for review
 !unity-shadergraph.unitypackage
+!0x00-unity-shaders.unitypackage
