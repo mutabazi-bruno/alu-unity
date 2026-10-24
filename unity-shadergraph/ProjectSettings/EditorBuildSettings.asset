@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GlowShowcase.unity
     guid: 35a8f69f824cec540b009fcbce01a334
+  - enabled: 1
+    path: Assets/Scenes/GlowPulse.unity
+    guid: ba56df6c331c2a842a5fafdce6bbf002
   m_configObjects: {}
