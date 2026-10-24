@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Disintegrate.unity
     guid: ba4d2867d34e73d46993239185c7b172
+  - enabled: 1
+    path: Assets/Scenes/Ice.unity
+    guid: 6f527f35c819b7d45aab5758be72ed3a
   m_configObjects: {}
