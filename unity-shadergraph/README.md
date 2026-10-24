@@ -30,6 +30,28 @@ Properties you can change in the Inspector:
 
 `glow_cyan.mat` and `glow_pink.mat` are extra presets that use the same shader. The `GlowShowcase` scene shows all three on spheres.
 
+### 1. Pulse
+
+![Pulsing glow on three spheres](1-pulse.gif)
+
+`Assets/Shaders/glow_animated.shadergraph` takes the glow shader and makes the glow fade in and out. The material is `Assets/Materials/glow_animated.mat`.
+
+How it works: the **Time** node is multiplied by the pulse frequency and by 2π, then goes through a **Sine** node, so it repeats once per second when the frequency is 1. A **Remap** node turns the sine's -1 to 1 range into 0 to 1, and a **Lerp** node uses that value to blend between the minimum and maximum glow strength. The result replaces the fixed strength from the previous task.
+
+Properties you can change in the Inspector:
+
+| Property | What it does |
+| --- | --- |
+| Base Color | Main surface color |
+| Glow Color | HDR color of the edge glow |
+| Min Glow Strength | Glow brightness at the dimmest point of the pulse |
+| Max Glow Strength | Glow brightness at the brightest point of the pulse |
+| Pulse Frequency | Pulses per second |
+| Glow Power | Fresnel exponent: higher values give a thinner rim |
+| Smoothness | Surface smoothness, for the specular highlight |
+
+`glow_animated_cyan.mat` and `glow_animated_pink.mat` are extra presets with different speeds. The `GlowPulse` scene shows all three. The pulse plays in Play mode, or in the Scene view when **Always Refresh** is turned on in the effects menu.
+
 ## Asset package
 
-`unity-shadergraph.unitypackage` contains the shader graph, the materials and the showcase scene. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat` onto any 3D object.
+`unity-shadergraph.unitypackage` contains the shader graphs, the materials and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat` or `glow_animated.mat` onto any 3D object.
