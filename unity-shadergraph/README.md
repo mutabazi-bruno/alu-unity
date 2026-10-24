@@ -166,6 +166,31 @@ Properties you can change in the Inspector:
 
 Unity's built-in Plane only has 11 x 11 vertices, which is enough to see the waves but looks a bit blocky. The `Water` scene uses `Assets/Meshes/WaterGrid.asset` instead, a 40 x 40 unit grid with 160 x 160 squares, made for this project. `water_stormy.mat` is an extra preset with darker water and bigger, slower waves. The animation plays in Play mode, or in the Scene view with **Always Refresh** turned on.
 
+### 6. Same day delivery
+
+`0x00-unity-shaders.unitypackage` holds only the shaders, their materials and the texture they use, with no scenes or extra files:
+
+```
+Materials/
+    glow.mat
+    glow_animated.mat
+    disintegrate.mat
+    ice.mat
+    hologram.mat
+    water.mat
+Shaders/
+    glow.shadergraph
+    glow_animated.shadergraph
+    disintegrate.shadergraph
+    ice.shadergraph
+    hologram.shadergraph
+    water.shadergraph
+Textures/
+    hologram_scanlines.png
+```
+
+It imports into a new URP project with no errors, and every material finds its shader (and the hologram material its texture). The project still needs URP and Shader Graph installed, as described in **Setup**.
+
 ## Asset package
 
-`unity-shadergraph.unitypackage` contains the shader graphs, the materials, the textures, the water mesh and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, `ice.mat` or `hologram.mat` onto a cube, or `water.mat` onto a plane or cube.
+`unity-shadergraph.unitypackage` is the bigger package used to review tasks 0 to 5. It contains the shader graphs, the materials, the textures, the water mesh and the showcase scenes. To use it, import it into a URP project with **Assets > Import Package > Custom Package**, then drag `glow.mat`, `glow_animated.mat` or `disintegrate.mat` onto any 3D object, `ice.mat` or `hologram.mat` onto a cube, or `water.mat` onto a plane or cube.
